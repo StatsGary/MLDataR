@@ -1,5 +1,7 @@
 # MLDataR
 
+<p><a href="https://hutsons-hacks.info/"><img src = "man/figures/mldataR.png" width = "125px" height = "150px" align="right"></a></p>
+
  <!-- badges: start -->
   [![R-CMD-check](https://github.com/StatsGary/MLDataR/workflows/R-CMD-check/badge.svg)](https://github.com/StatsGary/MLDataR/actions)
   [![](https://cranlogs.r-pkg.org/badges/MLDataR)](https://cran.r-project.org/package=MLDataR)
