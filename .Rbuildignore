@@ -1,3 +1,16 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^LICENSE\.md$
+^\.github$
+^CRAN-RELEASE$
+^README.*\.md$
+inst/examples/knitr-.*.pdf
+inst/examples/child/knitr-.*.pdf
+inst/examples/child/knitr-.*\.md
+inst/examples/figure
+inst/examples/cache
+^\.travis\.yml$
+cran-comments.md
+^doc$
+^Meta$
+^CODE_OF_CONDUCT\.md$

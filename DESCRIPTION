@@ -1,8 +1,11 @@
 Package: MLDataR
 Type: Package
 Title: Collection of Machine Learning Datasets for Supervised Machine Learning
-Version: 0.1.0
-Author: Gary Hutson
+Version: 0.1.1
+Authors@R: c(
+          person("Gary", "Hutson", , "hutsons-hacks@outlook.com", c("aut", "cre"), 
+          comment = c(ORCID="0000-0003-3534-6143"))
+          )
 Maintainer: Gary Hutson <hutsons-hacks@outlook.com>
 Description: This package has a collection of datasets for working with machine learning tasks.
     It will contain datasets for supervised machine learning and will include datasets for classification and regression.
@@ -10,3 +13,12 @@ Description: This package has a collection of datasets for working with machine 
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
+BugReports: https://github.com/StatsGary/MLDataR/issues
+Imports:
+    ConfusionTableR,
+    caret, 
+    dplyr,
+    mlbench
+Depends: 
+    R (>= 2.10)
+RoxygenNote: 7.1.2
