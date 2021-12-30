@@ -7,7 +7,7 @@ Authors@R: c(
           comment = c(ORCID="0000-0003-3534-6143"))
           )
 Maintainer: Gary Hutson <hutsons-hacks@outlook.com>
-Description: This package has a collection of datasets for working with machine learning tasks.
+Description: contains a collection of datasets for working with machine learning tasks.
     It will contain datasets for supervised machine learning and will include datasets for classification and regression.
     The aim of this package is to use data generated around health and other domains.
 License: MIT + file LICENSE
@@ -16,13 +16,12 @@ LazyData: true
 BugReports: https://github.com/StatsGary/MLDataR/issues
 Imports:
     ConfusionTableR,
-    caret, 
     dplyr,
     parsnip, 
     rsample,
     recipes,
-    ranger, 
-    workflows
+    workflows,
+    ranger
 Depends: 
     R (>= 2.10)
 RoxygenNote: 7.1.2
