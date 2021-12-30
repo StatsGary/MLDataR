@@ -18,7 +18,7 @@ Imports:
     ConfusionTableR,
     caret, 
     dplyr,
-    mlbench
+    tidymodels
 Depends: 
     R (>= 2.10)
 RoxygenNote: 7.1.2
