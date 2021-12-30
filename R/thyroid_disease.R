@@ -39,11 +39,15 @@
 #' @examples
 #' library(dplyr)
 #' library(ConfusionTableR)
-#' library(tidymodels)
+#' library(parsnip)
+#' library(rsample)
+#' library(recipes)
+#' library(ranger)
+#' library(workflows)
 #' data("thyroid_disease")
 #' td <- thyroid_disease
 #' # Create a factor of the class label to use in ML model
-#' $ThryroidClass <- as.factor(td$ThryroidClass)
+#' td$ThryroidClass <- as.factor(td$ThryroidClass)
 #' # Check the structure of the data to make sure factor has been created
 #' str(td)
 #' # Remove missing values, or choose more advaced imputation option
@@ -74,8 +78,8 @@
 #' # Create the model workflow
 #' td_wf <-
 #'   workflow() %>%
-#'   add_model(rf_mod) %>%
-#'   add_recipe(td_recipe)
+#'   workflows::add_model(rf_mod) %>%
+#'   workflows::add_recipe(td_recipe)
 #'# Fit the workflow to our training data
 #' set.seed(123)
 #' td_rf_fit <-
@@ -99,5 +103,4 @@
 #' cm$confusion_matrix
 #' #View record level
 #' cm$record_level_cm
-#'
 "thyroid_disease"
