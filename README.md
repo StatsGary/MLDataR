@@ -32,6 +32,15 @@ To install from CRAN, use the below command:
 install.packages("MLDataR")
 
 ```
+## Datasets included
+
+The package currently has three example datasets, and more are being added every week. The first three datasets contained in the package are:
+
+- Diabetes disease prediction - supervised machine learning classification dataset to enable the prediction of diabetic patients
+- Heart disease prediction - supervised machine learning classification dataset to enable the prediction of heart disease using a number of key outcome features
+- Thyroid disease prediction - supervised machine learning classification dataset to allow for the prediction of thyroid disease utilising historic patient records
+
+
 ## Further developments
 
 More datasets are being added, so look out for the next version of this package. 
