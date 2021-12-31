@@ -1,0 +1,12 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+.all-contributorsrc
+inst/doc
+README.md
+doc
+Meta
+/doc/
+/Meta/
+.DS_Store

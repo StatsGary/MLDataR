@@ -1,0 +1,348 @@
+---
+title: "MLDataR - A Package for ML datasets"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{MLDataR}
+  %\VignetteEngine{knitr::rmarkdown} --> %\VignetteEngine{rmarkdown::render}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.height= 5, 
+  fig.width=7
+)
+```
+
+<p><a href="https://github.com/StatsGary/MLDataR"><img src = "mldataR.png" width = "125px" height = "150px" align="right"></a></p>
+
+```{r setup, include = FALSE, echo=FALSE}
+library(MLDataR)
+library(dplyr)
+library(ConfusionTableR)
+library(parsnip)
+library(rsample)
+library(recipes)
+library(ranger)
+library(workflows)
+library(caret)
+
+```
+
+
+## Installing the NHSDataR package
+To install the package use the below instructions:
+
+```{r install_MLDataR}
+#install.packages(MLDataR)
+library(MLDataR)
+
+```
+
+## What datasets are included
+
+The current list of data sets are:
+
+- **Diabetes disease prediction** - supervised machine learning classification dataset to enable the prediction of diabetic patients
+- **Diabetes onset prediction** - supervised machine learning regression dataset to enable prediction of the age at which a pre-diabetic will develop diabetes 
+- **Heart disease prediction** - supervised machine learning classification dataset to enable the prediction of heart disease using a number of key outcome features
+- **Long stayers prediction** - supervised machine learning classification dataset to enable the prediction of a patient staying in hospital longer than 7 days.
+- **Thyroid disease prediction** - supervised machine learning classification dataset to allow for the prediction of thyroid disease utilising historic patient records
+- **Failing Care Home classification** - classification supervised machine learning dataset to predict a failing care home by selected Datix incidents
+- **Counter Strike Global Offensive** - supervised machine learning regression and classification data set to predict score or match outcome. 
+
+More and more data sets are being added, and it is my mission to have more than 50 example datasets by the end of 2022. 
+
+## Thyroid Disease dataset
+
+I will first work with the Thyroid disease dataset and inspect the variables in the data:
+
+```{r thyroid_data}
+
+glimpse(MLDataR::thyroid_disease)
+
+```
+
+As you can see this dataset has 28 columns and 3,772 rows. The dataset is fully documented in the help file of what each one of the items means. The next task is to use this dataset to create a ML model in TidyModels.
+
+## Create TidyModels recipe to model the thyroid dataset
+
+This will show how to create and implement the dataset in TidyModels for a supervised ML classification task. 
+
+### Data preparation
+
+The first step will be to do the data preparation steps:
+
+```{r data_prep}
+data("thyroid_disease")
+td <- thyroid_disease
+# Create a factor of the class label to use in ML model
+td$ThryroidClass <- as.factor(td$ThryroidClass)
+# Check the structure of the data to make sure factor has been created
+str(td)
+```
+
+Next I will remove the missing variable, you could try another imputation method here such as MICE, however for speed of development and building vignette, I will leave this for you to look into:
+
+```{r remove_nulls}
+# Remove missing values, or choose more advaced imputation option
+td <- td[complete.cases(td),]
+#Drop the column for referral source
+td <- td %>%
+   dplyr::select(-ref_src)
+
+```
+
+### Split the data
+
+Next I will partition the data into a training and testing split, so I can evaluate how well the model performs on the testing set:
+
+```{r splitting}
+#Divide the data into a training test split
+set.seed(123)
+split <- rsample::initial_split(td, prop=3/4)
+train_data <- rsample::training(split)
+test_data <- rsample::testing(split)
+
+```
+
+### Create a recipe with preprocessing steps
+
+After I have split the data it is time to prepare a recipe for the preprocessing steps, here I will use the recipes package:
+
+
+```{r create_recipe}
+td_recipe <-
+   recipe(ThryroidClass ~ ., data=train_data) %>%
+   step_normalize(all_predictors()) %>%
+   step_zv(all_predictors())
+
+print(td_recipe)
+```
+
+This recipe links the outcome variable `ThyroidClass` and then we use a normalise function to centre and scale all the numerical outcome variables and then we will remove zero variance from the data.
+
+### Getting modelling with Parsnip
+
+We come to the modelling step of the exercise. Here I will instantiate a random forest model for the modeeling task at hand:
+
+
+```{r random_forest_model}
+set.seed(123)
+rf_mod <-
+  parsnip::rand_forest() %>%
+  set_engine("ranger") %>%
+  set_mode("classification")
+
+
+```
+
+### Create the model workflow
+
+[Tidymodels](https://www.tidymodels.org/) uses the concept of workflows to stitch the ML pipeline together, so I will now create the workflow and then fit the model:
+
+```{r creating_workflow}
+td_wf <-
+   workflow() %>%
+   workflows::add_model(rf_mod) %>%
+   workflows::add_recipe(td_recipe)
+
+print(td_wf)
+# Fit the workflow to our training data
+set.seed(123)
+td_rf_fit <-
+   td_wf %>%
+   fit(data = train_data)
+# Extract the fitted data
+td_fitted <- td_rf_fit %>%
+    extract_fit_parsnip()
+
+```
+### Make predictions and evaluate with ConfusionTableR
+
+The final step, before deploying this live, would be to make predictions on the test set and then evaluate with the ConfusionTableR package:
+
+```{r make_preds_and_evaluate}
+# Predict the test set on the training set to see model performance
+class_pred <- predict(td_rf_fit, test_data)
+td_preds <- test_data %>%
+    bind_cols(class_pred)
+# Convert both to factors
+td_preds$.pred_class <- as.factor(td_preds$.pred_class)
+td_preds$ThryroidClass <- as.factor(td_preds$ThryroidClass)
+
+str(td_preds)
+
+# Evaluate the data with ConfusionTableR
+cm <- binary_class_cm(td_preds$.pred_class,
+                      td_preds$ThryroidClass,
+                      positive="sick")
+
+
+
+```
+
+Final step is to view the Confusion Matrix and collapse down for storage in a database to model accuracy drift over time:
+
+```{r modelling_preds}
+#View Confusion matrix
+cm$confusion_matrix
+#View record level
+cm$record_level_cm
+
+```
+
+That is an example of how to model the Thyroid dataset, and random forest ensembles are giving us good estimates of the model performance. The Kappa level is also excellent, meaning that the model has a high likelihood of being good in practice. 
+
+## Diabetes dataset
+The diabetes dataset can be loaded from the package with ease also:
+
+```{r diabetes}
+glimpse(MLDataR::diabetes_data)
+```
+Has a number of variables that are common with people of diabetes, however some dummy encoding would be needed of the Yes / No variables to make this model work.
+
+This is another example of a dataset that you could build an ML model on.
+
+## Heart disease prediction
+
+The final dataset, for now, in the package is the heart disease dataset. To load and work with this dataset you could use the following:
+
+```{r load_in_heart}
+data(heartdisease)
+# Convert diabetes data to factor'
+hd <- heartdisease %>%
+ mutate(HeartDisease = as.factor(HeartDisease))
+is.factor(hd$HeartDisease)
+```
+
+### Dummy encode the dataset
+The [ConfusionTableR](https://CRAN.R-project.org/package=ConfusionTableR) package has a `dummy_encoder` function baked into the package. To code up the dummy variables you could use an approach similar to below:
+
+```{r dummy_encode}
+# Get categorical columns
+hd_cat <- hd  %>%
+  dplyr::select_if(is.character)
+# Dummy encode the categorical variables 
+ cols <- c("RestingECG", "Angina", "Sex")
+# Dummy encode using dummy_encoder in ConfusionTableR package
+coded <- ConfusionTableR::dummy_encoder(hd_cat, cols, remove_original = TRUE)
+coded <- coded %>%
+     select(RestingECG_ST, RestingECG_LVH, Angina=Angina_Y,
+     Sex=Sex_F)
+# Remove column names we have encoded from original data frame
+hd_one <- hd[,!names(hd) %in% cols]
+# Bind the numerical data on to the categorical data
+hd_final <- bind_cols(coded, hd_one)
+# Output the final encoded data frame for the ML task
+glimpse(hd_final)
+```
+
+The data is now ready for modelling in the same fashion as we saw with the thyroid dataset.
+
+## Long stayers
+This is a dataset for long stay patients and has been created off the back of real NHS data. Load in the data and the required packages:
+
+```{r ls_one}
+library(MLDataR)
+library(dplyr)
+library(ggplot2)
+library(caret)
+library(rsample)
+library(varhandle)
+
+data("long_stayers")
+glimpse(long_stayers)
+
+```
+
+Do some feature engineering on the dataset:
+
+```{r ls_two}
+long_stayers <- long_stayers %>% 
+  dplyr::mutate(stranded.label=factor(stranded.label)) %>% 
+  dplyr::select(everything(), -c(admit_date))
+
+cats <- select_if(long_stayers, is.character)
+cat_dummy <- varhandle::to.dummy(cats$frailty_index, "frail_ind") 
+#Converts the frailty index column to dummy encoding and sets a column called "frail_ind" prefix
+cat_dummy <- cat_dummy %>% 
+  as.data.frame() %>% 
+  dplyr::select(-frail_ind.No_index_item) #Drop the field of interest
+# Drop the frailty index from the stranded data frame and bind on our new encoding categorical variables
+long_stayers <- long_stayers %>% 
+  dplyr::select(-frailty_index) %>% 
+  bind_cols(cat_dummy) %>% na.omit(.)
+```
+
+Then we will split and model the data. This uses the CARET package to do the modelling:
+
+```{r ls_three}
+split <- rsample::initial_split(long_stayers, prop = 3/4)
+train <- rsample::training(split)
+test <- rsample::testing(split)
+
+set.seed(123)
+glm_class_mod <- caret::train(factor(stranded.label) ~ ., data = train,
+                 method = "glm")
+print(glm_class_mod)
+```
+
+Next, we will make predictions on the model:
+
+```{r ls_four}
+split <- rsample::initial_split(long_stayers, prop = 3/4)
+train <- rsample::training(split)
+test <- rsample::testing(split)
+
+set.seed(123)
+glm_class_mod <- caret::train(factor(stranded.label) ~ ., data = train, 
+                 method = "glm")
+print(glm_class_mod)
+```
+
+Predicting on the test set to do the evaluation:
+
+```{r ls_five}
+preds <- predict(glm_class_mod, newdata = test) # Predict class
+pred_prob <- predict(glm_class_mod, newdata = test, type="prob") #Predict probs
+
+# Join prediction on to actual test data frame and evaluate in confusion matrix
+
+predicted <- data.frame(preds, pred_prob)
+test <- test %>% 
+  bind_cols(predicted) %>% 
+  dplyr::rename(pred_class=preds)
+
+glimpse(test)
+```
+
+Finally, we can evaluate with the ConfusionTableR package and use the OddsPlotty package to visualise the odds ratios:
+
+```{r ls_six}
+library(ConfusionTableR)
+cm <- ConfusionTableR::binary_class_cm(test$stranded.label, test$pred_class, positive="Stranded")
+cm$record_level_cm
+
+library(OddsPlotty)
+plotty <- OddsPlotty::odds_plot(glm_class_mod$finalModel,
+                                title = "Odds Plot ",
+                                subtitle = "Showing odds of patient stranded",
+                                point_col = "#00f2ff",
+                                error_bar_colour = "black",
+                                point_size = .5,
+                                error_bar_width = .8,
+                                h_line_color = "red")
+print(plotty)
+
+```
+
+
+## What's on the horizon?
+If you have a dataset and it is dying to be included in this package please reach out to me [`@StatsGary`](https://twitter.com/StatsGary) and I would be happy to add you to the list of collaborators.
+
+I will be aiming to add an additional 30+ datasets to this package. All of which are at various stages of documentation, so the first version of this package will be released with the three core datasets, with more being added each additional version of the package. 
+
+Please keep watching the package [GitHub](https://github.com/StatsGary/MLDataR), and make sure you install the latest updates of the package, when they are available. 
