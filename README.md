@@ -2,8 +2,6 @@
 
 <p><a href="https://hutsons-hacks.info/"><img src = "man/figures/mldataR.png" width = "200px" height = "150px" align="right"></a></p>
 
-<br></br>
-
  <!-- badges: start -->
   [![R-CMD-check](https://github.com/StatsGary/MLDataR/workflows/R-CMD-check/badge.svg)](https://github.com/StatsGary/MLDataR/actions)
   [![](https://cranlogs.r-pkg.org/badges/MLDataR)](https://cran.r-project.org/package=MLDataR)
@@ -11,6 +9,7 @@
   ![GitHub last commit](https://img.shields.io/github/last-commit/StatsGary/MLDataR)
   ![GitHub Repo stars](https://img.shields.io/github/stars/StatsGary/MLDataR?label=MLDataR%20Stars)
   [![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/MLDataR)](https://cran.r-project.org/package=MLDataR)
+  [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/ald0405/SangerTools/blob/master/LICENSE)
   <!-- badges: end -->
 
 A collection of Machine Learning datasets for health care and beyond.
