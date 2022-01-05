@@ -210,7 +210,7 @@ is.factor(hd$HeartDisease)
 ```
 
 ### Dummy encode the dataset
-The [ConfusionTableR](https://cran.r-project.org/web/packages/ConfusionTableR/index.html) package has a `dummy_encoder` function baked into the package. To code up the dummy variables you could use an approach similar to below:
+The [ConfusionTableR](https://CRAN.R-project.org/package=ConfusionTableR) package has a `dummy_encoder` function baked into the package. To code up the dummy variables you could use an approach similar to below:
 
 ```{r dummy_encode}
 # Get categorical columns

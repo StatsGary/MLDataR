@@ -7,8 +7,8 @@ Authors@R: c(
           comment = c(ORCID="0000-0003-3534-6143"))
           )
 Maintainer: Gary Hutson <hutsons-hacks@outlook.com>
-Description: contains a collection of datasets for working with machine learning tasks.
-    It will contain datasets for supervised machine learning and will include datasets for classification and regression.
+Description: Contains a collection of datasets for working with machine learning tasks.
+    It will contain datasets for supervised machine learning Jiang (2020)<doi:10.1016/j.beth.2020.05.002> and will include datasets for classification and regression.
     The aim of this package is to use data generated around health and other domains.
 License: MIT + file LICENSE
 Encoding: UTF-8
