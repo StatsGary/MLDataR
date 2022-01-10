@@ -22,10 +22,10 @@ Imports:
     recipes,
     workflows,
     ranger
-Depends: 
-    R (>= 2.10)
 RoxygenNote: 7.1.2
 Suggests: 
     rmarkdown,
     knitr
 VignetteBuilder: knitr
+Depends: 
+    R (>= 2.10)
