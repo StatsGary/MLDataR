@@ -6,7 +6,7 @@
 #' \describe{
 #'   \item{CareHomeFail}{a binary indicator to specify whether a certain care home is failing}
 #'   \item{WeightLoss}{aggregation of incidents indicating weight loss in patient}
-#'   \item{Medication}{if the patient has a history of excessive urination}
+#'   \item{Medication}{medication missed aggregaation}
 #'   \item{Polydipsia}{abnormal thurst, accompanied by the excessive intake of water or fluid}
 #'   \item{WeightLossSudden}{Sudden weight loss that has recently occured}
 #'   \item{Fatigue}{Fatigue or weakness}
