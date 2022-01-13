@@ -1,10 +1,11 @@
 Package: MLDataR
 Type: Package
 Title: Collection of Machine Learning Datasets for Supervised Machine Learning
-Version: 0.1.1
+Version: 0.1.2
 Authors@R: c(
           person("Gary", "Hutson", , "hutsons-hacks@outlook.com", c("aut", "cre"), 
-          comment = c(ORCID="0000-0003-3534-6143"))
+          comment = c(ORCID="0000-0003-3534-6143")),
+          person("Asif", "Laldin", , "laldin.asif@gmail.com", c("aut"))
           )
 Maintainer: Gary Hutson <hutsons-hacks@outlook.com>
 Description: Contains a collection of datasets for working with machine learning tasks.
