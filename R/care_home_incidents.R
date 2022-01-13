@@ -13,6 +13,7 @@
 #'   \item{Polyphagia}{excessive or extreme hunger}
 #'   \item{GenitalThrush}{patient has thrush fungus on or near their genital region}
 #'   \item{BlurredVision}{history of blurred vision}
+#'   }
 
 #' @source Collected by Gary Hutson \email{hutsons-hacks@outlook.com}, Jan-2022
 #' @examples
