@@ -7,21 +7,25 @@
 #'   \item{CareHomeFail}{a binary indicator to specify whether a certain care home is failing}
 #'   \item{WeightLoss}{aggregation of incidents indicating weight loss in patient}
 #'   \item{Medication}{medication missed aggregaation}
-#'   \item{Polydipsia}{abnormal thurst, accompanied by the excessive intake of water or fluid}
-#'   \item{WeightLossSudden}{Sudden weight loss that has recently occured}
-#'   \item{Fatigue}{Fatigue or weakness}
-#'   \item{Polyphagia}{excessive or extreme hunger}
-#'   \item{GenitalThrush}{patient has thrush fungus on or near their genital region}
-#'   \item{BlurredVision}{history of blurred vision}
+#'   \item{Falls}{Recorded number of patient falls}
+#'   \item{Choking}{Number of patient choking incidents}
+#'   \item{UnexpectedDeaths}{unexpected deaths in the care home}
+#'   \item{Bruising}{Number of bruising incidents in the care home}
+#'   \item{Absconsion}{Absconding from the care home setting}
+#'   \item{ResidentAbuseByResident}{Abuse conducted by one care home resident against another}
+#'   \item{ResidentAbuseByStaff}{Incidents of resident abuse by staff}
+#'   \item{ResidentAbuseOnStaff}{Incidents of residents abusing staff}
+#'   \item{Wounds}{Unexplained wounds against staff}
 #'   }
 
 #' @source Collected by Gary Hutson \email{hutsons-hacks@outlook.com}, Jan-2022
 #' @examples
 #' library(dplyr)
-#' data(diabetes_data)
+#' data(care_home_incidents)
 #' # Convert diabetes data to factor'
-#' diabetes_data <- diabetes_data %>%
-#'  glimpse() %>%
-#'  mutate(DiabeticClass = as.factor(DiabeticClass))
-#'  is.factor(diabetes_data$DiabeticClass)
-"diabetes_data"
+#' ch_incs <- care_home_incidents %>%
+#'  mutate(CareHomeFail = as.factor(CareHomeFail))
+#'  ch_incs %>% glimpse()
+#'  # Check factor
+#'  factor(ch_incs$CareHomeFail)
+"care_home_data"
