@@ -28,4 +28,4 @@
 #'  ch_incs %>% glimpse()
 #'  # Check factor
 #'  factor(ch_incs$CareHomeFail)
-"care_home_data"
+"care_home_incidents"
