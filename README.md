@@ -36,6 +36,7 @@ install.packages("MLDataR")
 The package currently has three example datasets, and more are being added every week. The first three datasets contained in the package are:
 
 - Diabetes disease prediction - supervised machine learning classification dataset to enable the prediction of diabetic patients
+- Diabetes onset prediction - supervised machine learning regression dataset to enable prediction of the age at which a pre-diabetic will develop diabetes 
 - Heart disease prediction - supervised machine learning classification dataset to enable the prediction of heart disease using a number of key outcome features
 - Thyroid disease prediction - supervised machine learning classification dataset to allow for the prediction of thyroid disease utilising historic patient records
 
