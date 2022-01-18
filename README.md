@@ -56,4 +56,4 @@ More datasets are being added, so look out for the next version of this package.
 
 ## Closing remarks
 
-It has been fun putting this package together and I hope you find it useful. If you find any issues using the package, please raise a git hub ticket and I will address it as soon as possible. 
+It has been fun putting this package together and I hope you find it useful. If you find any issues using the package, please raise a git hub ticket and I will address it as soon as possible. Thanks and I hope you enjoy using it.
