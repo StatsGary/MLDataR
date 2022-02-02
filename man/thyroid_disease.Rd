@@ -107,8 +107,8 @@ bind_cols(class_pred)
 td_preds$.pred_class <- as.factor(td_preds$.pred_class)
 td_preds$ThryroidClass <- as.factor(td_preds$ThryroidClass)
 # Evaluate the data with ConfusionTableR
-cm <- ConfusionTableR::binary_class_cm(train_labels = td_preds$ThryroidClass ,
-                                       truth_labels = td_preds$.pred_class,
+cm <- ConfusionTableR::binary_class_cm(td_preds$ThryroidClass ,
+                                       td_preds$.pred_class,
                                        positive="sick")
 #View Confusion matrix
 cm$confusion_matrix
