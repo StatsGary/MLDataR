@@ -22,7 +22,7 @@ Imports:
     rsample,
     recipes,
     workflows,
-    ranger
+    ranger, caret
 RoxygenNote: 7.1.2
 Suggests: 
     rmarkdown,

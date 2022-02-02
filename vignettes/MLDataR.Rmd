@@ -3,7 +3,7 @@ title: "MLDataR - A Package for ML datasets"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{MLDataR}
-  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEngine{knitr::rmarkdown} --> %\VignetteEngine{rmarkdown::render}
   %\VignetteEncoding{UTF-8}
 ---
 
@@ -27,6 +27,7 @@ library(rsample)
 library(recipes)
 library(ranger)
 library(workflows)
+library(caret)
 
 ```
 
@@ -169,9 +170,11 @@ td_preds$.pred_class <- as.factor(td_preds$.pred_class)
 td_preds$ThryroidClass <- as.factor(td_preds$ThryroidClass)
 
 # Evaluate the data with ConfusionTableR
-cm <- ConfusionTableR::binary_class_cm(train_labels = td_preds$ThryroidClass ,
-                                       truth_labels = td_preds$.pred_class,
+cm <- ConfusionTableR::binary_class_cm(td_preds$ThryroidClass,
+                                       td_preds$.pred_class,
                                        positive="sick")
+
+
 
 ```
 
