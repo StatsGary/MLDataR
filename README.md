@@ -49,7 +49,7 @@ The package currently has three example datasets, and more are being added every
 - **Heart disease prediction** - supervised machine learning classification dataset to enable the prediction of heart disease using a number of key outcome features
 - **Thyroid disease prediction** - supervised machine learning classification dataset to allow for the prediction of thyroid disease utilising historic patient records
 - **Failing Care Home classification** - classification supervised machine learning dataset to predict a failing care home by selected Datix incidents
-
+- **Counter Strike Global Offensive** - supervised machine learning regression and classification data set to predict score or match outcome. 
 ## Further developments
 
 More datasets are being added, so look out for the next version of this package. 
