@@ -36,7 +36,7 @@ library(caret)
 To install the package use the below instructions:
 
 ```{r install_MLDataR}
-#install.packages(MLDataR)
+#install.packages("MLDataR")
 library(MLDataR)
 
 ```
@@ -83,7 +83,7 @@ str(td)
 Next I will remove the missing variable, you could try another imputation method here such as MICE, however for speed of development and building vignette, I will leave this for you to look into:
 
 ```{r remove_nulls}
-# Remove missing values, or choose more advaced imputation option
+# Remove missing values, or choose more advanced imputation option
 td <- td[complete.cases(td),]
 #Drop the column for referral source
 td <- td %>%
@@ -122,7 +122,7 @@ This recipe links the outcome variable `ThyroidClass` and then we use a normalis
 
 ### Getting modelling with Parsnip
 
-We come to the modelling step of the exercise. Here I will instantiate a random forest model for the modeeling task at hand:
+We come to the modelling step of the exercise. Here I will instantiate a random forest model for the modelling task at hand:
 
 
 ```{r random_forest_model}
@@ -208,7 +208,7 @@ The final dataset, for now, in the package is the heart disease dataset. To load
 
 ```{r load_in_heart}
 data(heartdisease)
-# Convert diabetes data to factor'
+# Convert heart disease data to factor'
 hd <- heartdisease %>%
  mutate(HeartDisease = as.factor(HeartDisease))
 is.factor(hd$HeartDisease)
