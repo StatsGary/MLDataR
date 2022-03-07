@@ -42,7 +42,7 @@ library(MLDataR)
 
 ## Datasets included
 
-The package currently has three example datasets, and more are being added every week. The first three datasets contained in the package are:
+The package currently has six example datasets, and more are being added every week. The first six datasets contained in the package are:
 
 - **Diabetes disease prediction** - supervised machine learning classification dataset to enable the prediction of diabetic patients
 - **Diabetes onset prediction** - supervised machine learning regression dataset to enable prediction of the age at which a pre-diabetic will develop diabetes 
